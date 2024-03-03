@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    article {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .calculator {
+      border-radius: 10px;
+      background-color: black;
+      padding: 10px;
+      border: 2px solid;
+      height: 320px;
+    }
+    button {
+      margin-top: 5px;
+      color: black;
+      font-size: larger;
+      cursor: pointer;
+      width: 60px;
+      padding: 10px;
+      border: 3px solid white;
+      border-radius: 10px;
+    }
+    .display {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .display input {
+      font-size: larger;
+      width: 14.5rem;
+      text-align: right;
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+    }
+    #equal{
+
+      width: 124px;
+      color: black;
+      font-size: larger;
+      height: 45px;
+      border: 2px solid white;
+      border-radius: 10px;
+    }
+    #clear,#delete{
+      font-size: larger;
+      color: black;
+      width: 60px;
+      height: 50px;
+      border: 2px solid black;
+      border-radius: 10px;
+    }
+    #equal:hover,#clear:hover,#delete:hover,button:hover{
+      background-color: grey;
+    } 
+    h1{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple Basic Calculator</h1>
+  <article>
+  <div class="calculator">
+    <div class="display">
+      <input type="text">
+    </div>
+    <div>
+      <input type="button" value="AC" id="clear">
+      <input type="button" value="DE" id="delete">
+      <button>%</button>
+      <button>/</button>
+    </div>
+    <div>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button style="font-size: 20px;">*</button>
+    </div>
+    <div>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>-</button>
+    </div>
+    <div>
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>+</button>
+    </div>
+    <div>
+      <button>0</button>
+      <button>.</button>
+      <input type="button" value="=" id="equal">
+    </div>
+  </div>
+ </article>
+  <script>
+    var char = document.querySelectorAll('button');
+    var dis = document.querySelector('.display input');
+    var del = document.getElementById('delete');
+    var clr = document.getElementById('clear');
+    const res = document.getElementById('equal');
+    del.addEventListener('click', remove);
+    clr.addEventListener('click', removeall);
+    res.addEventListener('click', result);
+    for (var i = 0; i < char.length; i++) {
+      char[i].addEventListener('click',display);
+    }
+    function display(){
+      dis.value += this.textContent;
+    }
+    function remove() {
+      dis.value = dis.value.slice(0, -1);
+    }
+    function removeall() {
+      dis.value = '';
+    }
+    function result() {
+      try {
+        // Evaluate the expression
+        let result = eval(dis.value);
+        // Check if the result is a valid number
+        if (isNaN(result)) {
+          throw new Error("Invalid operation.");
+        }
+        // Check for division by zero
+        if (result === Infinity || result === -Infinity) {
+          throw new Error("Division by zero.");
+        }
+        // Display the result
+        dis.value = result;
+      } catch (error) {
+        // Handle the exception
+        dis.value = 'Error';
+        console.error("An error occurred during calculation:", error.message);
+      }
+    }
+  </script>
+</body>
+</html>
